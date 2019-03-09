@@ -93,11 +93,12 @@
             }
         });
 
-        //If the Question number is equal to Question array length, then that is the end of Questions, so displaying final result - number of right , wrong and unanswered ones
+        //If the Question number is equal to Question array length, then that is the end of Questions, so displaying final result - number of right , wrong and
+        // unanswered ones
         if(Quenumbers==queArray.length )
         {
             $(".QASection").hide();
-            $("#result").html("Final result"+"<br>"+"Correct Answer"+correctAns+"<br>"+"Wrong Answer"+wrongAns+"<br>"+"Unanswered"+unanswered).show();
+            $("#result").html("Final result"+"<br>"+"Correct Answer "+correctAns+"<br>"+"Wrong Answer "+wrongAns+"<br>"+"Unanswered "+unanswered).show();
             $("#start").show();
             $("#start").text("StartOver?");
             start = 0;
