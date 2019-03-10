@@ -53,3 +53,9 @@ body{
     /* position: relative;
     top:-100px; */
 }
+#images{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%; 
+}

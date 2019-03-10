@@ -1,13 +1,18 @@
  $(document).ready(function()
 {
     //Variable declarations
-    var i=-1, j=-4,t,time=30, Quenumbers, corectAnsArrayCounter=-1,clicked=0,start=0,correctAns=0,wrongAns=0,unanswered=0;
+    var i=-1, j=-4,t,time=30, Quenumber=0, corectAnsArrayCounter=-1,clicked=0,start=0,correctAns=0,wrongAns=0,unanswered=0;
     //Array declarations
     var queArray = ["Who was the legendary Benedictine monk who invented champagne?","Name the largest freshwater lake in the world?","Where would you find the Sea of Tranquility?",
     "What kind of weapon is a falchion?","What is the diameter of Earth?","What is another word for lexicon?"];
+    
     var answerArray = ["Gregor Mendel","Martin luther","Dom Perignon","Gregori Rasputin","Lake Tahoe","Lake Superior","Lake Marion","Lake Ladoga","Australia","Asia","Antartica",
     "The Moon","sword","Spears","Bow and Arrow","Pike","10,000 miles","8000 miles","15,000 miles","12,000 miles","Computer","Digital","Dictionary","Semantics"];
+    
     var correctAnsArray = ["Dom Perignon","Lake Superior","The Moon","sword","8000 miles","Dictionary"]
+    
+    var imagearray = ["assets/images/champagne.jfif","assets/images/superior.jfif","assets/images/moon.jfif","assets/images/sword.jfif","assets/images/earth.jfif",
+    "assets/images/dictionary.jfif"]
 
     $(".QASection").hide();
     //Starting the Quiz by calling fuction startQuiz() on clicking Start button
@@ -15,24 +20,35 @@
         
         $(".QASection").show();
         $("#start").hide();
-        i=-1, j=-4,t,time=30, corectAnsArrayCounter=-1,correctAns=0,wrongAns=0,unanswered=0
+        i=-1, j=-4,t,time=30, corectAnsArrayCounter=-1,correctAns=0,wrongAns=0,unanswered=0;
         startQuiz();
     });
     
     //fuction startQuiz()
     function startQuiz()
     {
-        if(start === 0)
+        //Initializing all the variables for the start of each Quiz Questions 
+        clicked = 0;
+        i++;
+        Quenumber=i;
+        j=j+4;
+        corectAnsArrayCounter++;
+        time = 30;
+        $("#images").empty();
+
+        //If the Question number is equal to Question array length, then that is the end of Questions, so displaying final result - number of right , wrong and
+        // unanswered ones
+        if(Quenumber==queArray.length )
         {
-           // alert("starting");
-            //Initializing all the variables for the start of each Quiz Questions 
-            start = 1;
-            clicked = 0;
-            i++;
-            Quenumbers=i;
-            j=j+4;
-            corectAnsArrayCounter++;
-            time = 30;
+            $(".QASection").hide();
+            $("#result").html("Final result"+"<br>"+"Correct Answer "+correctAns+"<br>"+"Wrong Answer "+wrongAns+"<br>"+"Unanswered "+unanswered).show();
+            $("#start").show();
+            $("#start").text("StartOver?");
+        }
+
+        else
+        {
+            $("#Time").html("Time Remaining: "+time);
             $(".QASection").show();
             $("#result").hide();
             //Getting Question and answers from array and displaying it in the respective elements
@@ -50,7 +66,7 @@
     function timeRemFunction()
     {
         //Decrementing time by 1 
-        $("#Time").html(time);
+        $("#Time").html("Time Remaining: "+time);
         time--;
         //Hover Event
         $(".Answer").hover
@@ -75,6 +91,7 @@
                 {        
                     $(".QASection").hide();
                     $("#result").html("That is Correct").show();
+                    insertimages();
                     restartQuiz();
                     clicked=1;
                     //Keeping track of number of correct answers
@@ -84,7 +101,8 @@
                 else
                 {
                     $(".QASection").hide();
-                    $("#result").html("That is wrong. Correct answer is "+correctAnsArray[corectAnsArrayCounter]).show();
+                    $("#result").html("That is wrong."+"<br>"+ "Correct answer is "+correctAnsArray[corectAnsArrayCounter]).show();
+                    insertimages();
                     restartQuiz();
                     clicked=1;
                     //Keeping track of number of wrong answers
@@ -93,22 +111,13 @@
             }
         });
 
-        //If the Question number is equal to Question array length, then that is the end of Questions, so displaying final result - number of right , wrong and
-        // unanswered ones
-        if(Quenumbers==queArray.length )
-        {
-            $(".QASection").hide();
-            $("#result").html("Final result"+"<br>"+"Correct Answer "+correctAns+"<br>"+"Wrong Answer "+wrongAns+"<br>"+"Unanswered "+unanswered).show();
-            $("#start").show();
-            $("#start").text("StartOver?");
-            start = 0;
-        }
-
+        
         //If not clicking on any answer, keeping track of unanswered ones, displaying out of time and correct answer message and going to next round of Question
         if (time<0)
         {
             $(".QASection").hide();
             $("#result").html("<br><b>Out of time</b><br>Correct answer was "+correctAnsArray[corectAnsArrayCounter]).show();
+            insertimages();
             restartQuiz();
            unanswered++;
         }
@@ -118,7 +127,15 @@
     function restartQuiz()
     {
         clearInterval(t);
-        start = 0;
+        // start = 0;
         setTimeout(function(){ startQuiz(); }, 3000);
+    }
+
+    //
+    function insertimages()
+    {
+        var a = $("<img>");
+        a.attr("src", imagearray[corectAnsArrayCounter]);
+        $("#images").append(a);
     }
 });
