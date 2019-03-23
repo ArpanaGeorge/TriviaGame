@@ -1,3 +1,5 @@
+### Link to deployed project - https://arpanageorge.github.io/TriviaGame/
+
 # TriviaGame
 
 ## <b>Program Logic<b>
